@@ -1,295 +1,259 @@
-    Private Sub UserForm_Terminate()
-    
-        ' Oculta o formulário atual
-        Unload Me
-        ' Carrega e exibe o formulário ListaCaminhoes
-        ListaCaminhoes.Show vbModal
-        
-    End Sub
-    
-    Private Sub CommandButton2_Click()
-    
-        ' Oculta o formulário atual
-        Unload Me
-        ' Carrega e exibe o formulário ListaCaminhoes
-        ListaCaminhoes.Show vbModal
-        
-    End Sub
-    
-    Private Sub UserForm_Activate()
-    
-        Dim ws2 As Worksheet
-        Dim lastRow2 As Long
-        Dim cell2 As Range
-        Dim Combo1 As Collection
-        Dim Combo2 As Collection
-        Dim Combo3 As Collection
-        Dim Combo4 As Collection
-        Dim Combo5 As Collection
-        
-        Set ws2 = ThisWorkbook.Sheets("Projetado") ' Substitua "Projetado" pelo nome da sua planilha
-        
-        ' Inicializa a coleção para armazenar os valores únicos
-        Set Combo1 = New Collection
-        Set Combo2 = New Collection
-        Set Combo3 = New Collection
-        Set Combo4 = New Collection
-        Set Combo5 = New Collection
-        
-        ' Obtém a última linha preenchida na coluna A
-        lastRow2 = ws2.Cells(ws2.Rows.Count, "A").End(xlUp).Row
-        
-        'Percorrendo para ComboBox1
-        
-        ' Percorre os valores da coluna A a partir da linha 2
-        For Each cell2 In ws2.Range("A2:A" & lastRow2)
-            ' Verifica se o valor já está na coleção antes de adicioná-lo
-            On Error Resume Next
-            Combo1.Add cell2.value, CStr(cell2.value)
-            On Error GoTo 0
-        Next cell2
-        
-        ' Preenche a ComboBox1 com os valores únicos
-        For Each Item In Combo1
-            ComboBox1.AddItem Item
-        Next Item
-        
-        'Percorrendo para ComboBox2
-        
-        ' Percorre os valores da coluna B a partir da linha 2
-        For Each cell2 In ws2.Range("B2:B" & lastRow2)
-            ' Verifica se o valor já está na coleção antes de adicioná-lo
-            On Error Resume Next
-            Combo2.Add cell2.value, CStr(cell2.value)
-            On Error GoTo 0
-        Next cell2
-        
-        ' Preenche a ComboBox1 com os valores únicos
-        For Each Item In Combo2
-            ComboBox2.AddItem Item
-        Next Item
-        
-        'Percorrendo para ComboBox3
-        
-        ' Percorre os valores da coluna C a partir da linha 2
-        For Each cell2 In ws2.Range("C2:C" & lastRow2)
-            ' Verifica se o valor já está na coleção antes de adicioná-lo
-            On Error Resume Next
-            Combo3.Add cell2.value, CStr(cell2.value)
-            On Error GoTo 0
-        Next cell2
-        
-        ' Preenche a ComboBox1 com os valores únicos
-        For Each Item In Combo3
-            ComboBox3.AddItem Item
-        Next Item
-        
-        'Percorrendo para ComboBox4
-        
-        ' Percorre os valores da coluna D a partir da linha 2
-        For Each cell2 In ws2.Range("D2:D" & lastRow2)
-            ' Verifica se o valor já está na coleção antes de adicioná-lo
-            On Error Resume Next
-            Combo4.Add cell2.value, CStr(cell2.value)
-            On Error GoTo 0
-        Next cell2
-        
-        ' Preenche a ComboBox1 com os valores únicos
-        For Each Item In Combo4
-            ComboBox4.AddItem Item
-        Next Item
-        
-        'Percorrendo para ComboBox5
-        
-        ' Percorre os valores da coluna E a partir da linha 2
-        For Each cell2 In ws2.Range("E2:E" & lastRow2)
-            ' Verifica se o valor já está na coleção antes de adicioná-lo
-            On Error Resume Next
-            Combo5.Add cell2.value, CStr(cell2.value)
-            On Error GoTo 0
-        Next cell2
-        
-        ' Preenche a ComboBox1 com os valores únicos
-        For Each Item In Combo5
-            ComboBox5.AddItem Item
-        Next Item
-    
-    End Sub
-    
-    Private Sub ComboBox1_Exit(ByVal Cancel As MSForms.ReturnBoolean)
-        Dim selectedValue1 As Variant
-        Dim foundMatch1 As Boolean
-        
-        ' Obtenha o valor selecionado no ComboBox1
-        selectedValue1 = ComboBox1.value
-        
-        ' Verifique se o valor selecionado existe na lista do ComboBox1
-        For Each Item In ComboBox1.List
-            If Item = selectedValue1 Then
-                foundMatch1 = True
-                Exit For
-            End If
-        Next Item
-        
-        ' Se não houver correspondência, limpe o campo ComboBox1 e exiba uma mensagem de erro
-        If Not foundMatch1 Then
-            ComboBox1.value = "" ' Limpa o campo ComboBox1
-            MsgBox "Selecione um insumo válido.", vbExclamation, "Valor Inválido"
-            Cancel = True ' Impede que o foco seja movido para outro controle
-        End If
-    End Sub
-    
-    Private Sub ComboBox2_Exit(ByVal Cancel As MSForms.ReturnBoolean)
-        Dim selectedValue2 As Variant
-        Dim foundMatch2 As Boolean
-        
-        ' Obtenha o valor selecionado no ComboBox2
-        selectedValue2 = ComboBox2.value
-        
-        ' Verifique se o valor selecionado existe na lista do ComboBox2
-        For Each Item In ComboBox2.List
-            If Item = selectedValue2 Then
-                foundMatch2 = True
-                Exit For
-            End If
-        Next Item
-        
-        ' Se não houver correspondência, limpe o campo ComboBox2 e exiba uma mensagem de erro
-        If Not foundMatch2 Then
-            ComboBox2.value = "" ' Limpa o campo ComboBox2
-            MsgBox "Selecione um insumo válido.", vbExclamation, "Valor Inválido"
-            Cancel = True ' Impede que o foco seja movido para outro controle
-        End If
-    End Sub
-    
-    Private Sub ComboBox3_Exit(ByVal Cancel As MSForms.ReturnBoolean)
-        Dim selectedValue3 As Variant
-        Dim foundMatch3 As Boolean
-        
-        ' Obtenha o valor selecionado no ComboBox3
-        selectedValue3 = ComboBox3.value
-        
-        ' Verifique se o valor selecionado existe na lista do ComboBox3
-        For Each Item In ComboBox3.List
-            If Item = selectedValue3 Then
-                foundMatch3 = True
-                Exit For
-            End If
-        Next Item
-        
-        ' Se não houver correspondência, limpe o campo ComboBox3 e exiba uma mensagem de erro
-        If Not foundMatch3 Then
-            ComboBox3.value = "" ' Limpa o campo ComboBox3
-            MsgBox "Selecione um insumo válido.", vbExclamation, "Valor Inválido"
-            Cancel = True ' Impede que o foco seja movido para outro controle
-        End If
-    End Sub
-    
-    Private Sub ComboBox4_Exit(ByVal Cancel As MSForms.ReturnBoolean)
-        Dim selectedValue4 As Variant
-        Dim foundMatch4 As Boolean
-        
-        ' Obtenha o valor selecionado no ComboBox4
-        selectedValue4 = ComboBox4.value
-        
-        ' Verifique se o valor selecionado existe na lista do ComboBox4
-        For Each Item In ComboBox4.List
-            If Item = selectedValue4 Then
-                foundMatch4 = True
-                Exit For
-            End If
-        Next Item
-        
-        ' Se não houver correspondência, limpe o campo ComboBox4 e exiba uma mensagem de erro
-        If Not foundMatch4 Then
-            ComboBox4.value = "" ' Limpa o campo ComboBox4
-            MsgBox "Selecione um insumo válido.", vbExclamation, "Valor Inválido"
-            Cancel = True ' Impede que o foco seja movido para outro controle
-        End If
-    End Sub
-    
-    Private Sub ComboBox5_Exit(ByVal Cancel As MSForms.ReturnBoolean)
-        Dim selectedValue5 As Variant
-        Dim foundMatch5 As Boolean
-        
-        ' Obtenha o valor selecionado no ComboBox5
-        selectedValue5 = ComboBox5.value
-        
-        ' Verifique se o valor selecionado existe na lista do ComboBox5
-        For Each Item In ComboBox5.List
-            If Item = selectedValue5 Then
-                foundMatch5 = True
-                Exit For
-            End If
-        Next Item
-        
-        ' Se não houver correspondência, limpe o campo ComboBox5 e exiba uma mensagem de erro
-        If Not foundMatch5 Then
-            ComboBox5.value = "" ' Limpa o campo ComboBox5
-            MsgBox "Selecione um insumo válido.", vbExclamation, "Valor Inválido"
-            Cancel = True ' Impede que o foco seja movido para outro controle
-        End If
-    End Sub
+Private Sub UserForm_Activate()
 
-    Private Sub TextBox10_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
-        ' Verifica se o caractere digitado é um número ou uma vírgula
-        If Not (KeyAscii >= 48 And KeyAscii <= 57) And KeyAscii <> 44 Then
-            ' Cancela a entrada do caractere
-            KeyAscii = 0
-        End If
-    End Sub
-    
-    Private Sub TextBox10_Exit(ByVal Cancel As MSForms.ReturnBoolean)
-        Dim userInput As String
-        
-        ' Obtenha o valor digitado no campo TextBox10
-        userInput = TextBox10.value
-        
-        ' Verifique se é um número válido
-        If Not IsNumeric(userInput) Then
-            MsgBox "O valor digitado não é um número válido. Digite um número válido.", vbExclamation, "Número Inválido"
-            TextBox10.value = "" ' Limpa o campo TextBox10
-            Cancel = True ' Impede que o foco seja movido para outro controle
-        End If
-    End Sub
-    
-    Private Sub CommandButton1_Click()
-        Dim ws As Worksheet
-        Dim lastRow As Long
-        Dim nextRow As Long
-        
-        ' Definir a planilha "Consumo"
-        Set ws = ThisWorkbook.Worksheets("Consumo")
-        
-        ' Encontrar a última linha preenchida na coluna RecebID
-        lastRow = ws.Cells(ws.Rows.Count, "A").End(xlUp).Row
-        
-        ' Calcular o próximo número de ordem
-        nextRow = Application.WorksheetFunction.Max(ws.Range("C2:C" & lastRow)) + 1
-        
-        ' Inserir os valores na nova linha
-        ws.Cells(lastRow + 1, "A").value = TextBox11.value ' RecebID
-        ws.Cells(lastRow + 1, "C").value = nextRow ' Ordem
-        ws.Cells(lastRow + 1, "F").value = ComboBox1.value ' Serviço
-        ws.Cells(lastRow + 1, "G").value = ComboBox3.value ' Coluna
-        ws.Cells(lastRow + 1, "H").value = ComboBox2.value ' Bloco
-        ws.Cells(lastRow + 1, "I").value = ComboBox4.value ' Pavimento
-        ws.Cells(lastRow + 1, "J").value = ComboBox5.value ' Unidade
-        ws.Cells(lastRow + 1, "K").value = TextBox10.value ' Consumido (m³)
-        
-        ' Limpar os campos de entrada
-        TextBox11.value = ""
-        TextBox10.value = ""
-        ComboBox1.value = ""
-        ComboBox2.value = ""
-        ComboBox3.value = ""
-        ComboBox4.value = ""
-        ComboBox5.value = ""
-        
-        ' Mostrar uma mensagem de sucesso
-        MsgBox "Registro adicionado com sucesso.", vbInformation, "Sucesso"
-        
+    ' Verificar se a variável global "usernameGlobal" está vazia
+    If usernameGlobal = "" Then
+        ' Fechar o formulário atual
+        Me.Hide
+        ' Redirecionar para o formulário de login
+        Login.Show
+    End If
+
+    If TextBox1.value = "" Then
         Unload Me
-        ListaCaminhoes.Show vbModal
+        CaminhaoLista.Show
+    End If
     
-    End Sub
+    ComboBox1.Clear
+    ComboBox2.Clear
+    ComboBox3.Clear
+    ComboBox4.Clear
+    ComboBox5.Clear
+    TextBox2.value = ""
+    
+    ComboBox1.AddItem "Balizamento"
+    ComboBox1.AddItem "Drenagem Externa"
+    ComboBox1.AddItem "Estucagem"
+    ComboBox1.AddItem "Marquise"
+    ComboBox1.AddItem "Poço de Visita"
+    ComboBox1.AddItem "Reboco"
+    ComboBox1.AddItem "Regularização de Calha"
+    ComboBox1.AddItem "Regularização de Piso"
+    ComboBox1.AddItem "Requadramento de Paredes"
+    
+    ComboBox2.AddItem "A"
+    ComboBox2.AddItem "B"
+    ComboBox2.AddItem "Geral"
+    
+    ComboBox3.AddItem 10
+    ComboBox3.AddItem 9
+    ComboBox3.AddItem 8
+    ComboBox3.AddItem 7
+    ComboBox3.AddItem 6
+    ComboBox3.AddItem 5
+    ComboBox3.AddItem 4
+    ComboBox3.AddItem 3
+    ComboBox3.AddItem 2
+    ComboBox3.AddItem 1
+    ComboBox3.AddItem "Equipamentos Comunitários"
+    ComboBox3.AddItem "Infraestrutura"
+    
+    ComboBox4.AddItem "Térreo"
+    ComboBox4.AddItem "Primeiro"
+    ComboBox4.AddItem "Segundo"
+    ComboBox4.AddItem "Terceiro"
+    ComboBox4.AddItem "Cobertura"
+End Sub
+
+Private Sub ComboBox3_Change()
+
+    If ComboBox3.Value = "Equipamentos Comunitários" Then
+
+        ComboBox5.Clear
+        ComboBox5.Value = ""
+        ComboBox2.Value = "Geral"
+        ComboBox4.Value = "Térreo"
+        ComboBox5.AddItem "Quadra"
+        ComboBox5.AddItem "Salão de Festas"
+        ComboBox5.AddItem "Churrasqueira"
+        ComboBox5.AddItem "Piscina"
+
+    ElseIf ComboBox3.Value = "Infraestrutura" Then
+
+        ComboBox5.Clear
+        ComboBox5.Value = ""
+        ComboBox2.Value = "Geral"
+        ComboBox4.Value = "Térreo"
+        ComboBox5.AddItem "Muro Limitrofe"
+        ComboBox5.AddItem "Sarjeta"
+        ComboBox5.AddItem "Meio-fio"
+        ComboBox5.AddItem "Pavimentação"
+
+    Else
+
+        ComboBox5.Clear
+        ComboBox5.Value = ""
+        ComboBox5.AddItem 1
+        ComboBox5.AddItem 2
+        ComboBox5.AddItem 3
+        ComboBox5.AddItem 4
+        ComboBox5.AddItem 5
+        ComboBox5.AddItem 6
+        ComboBox5.AddItem 7
+        ComboBox5.AddItem 8
+        ComboBox5.AddItem 101
+        ComboBox5.AddItem 102
+        ComboBox5.AddItem 103
+        ComboBox5.AddItem 104
+        ComboBox5.AddItem 105
+        ComboBox5.AddItem 106
+        ComboBox5.AddItem 107
+        ComboBox5.AddItem 108
+        ComboBox5.AddItem 201
+        ComboBox5.AddItem 202
+        ComboBox5.AddItem 203
+        ComboBox5.AddItem 204
+        ComboBox5.AddItem 205
+        ComboBox5.AddItem 206
+        ComboBox5.AddItem 207
+        ComboBox5.AddItem 208
+        ComboBox5.AddItem 301
+        ComboBox5.AddItem 302
+        ComboBox5.AddItem 303
+        ComboBox5.AddItem 304
+        ComboBox5.AddItem 305
+        ComboBox5.AddItem 306
+        ComboBox5.AddItem 307
+        ComboBox5.AddItem 308
+        ComboBox5.AddItem "Cobertura"
+
+    End If
+
+End Sub
+
+Private Sub ComboBox5_Change()
+    Dim selectedValue As String
+    Dim lastRight As Integer
+    Dim lastLeft As Integer
+    
+    selectedValue = ComboBox5.Value
+    lastRight = Val(Right(selectedValue, 1))
+    lastLeft = Val(Left(selectedValue, 1))
+    
+    If Val(lastRight) = 4 Or Val(lastRight) = 3 Or Val(lastRight) = 2 Or Val(lastRight) = 1 Then
+        ComboBox2.Value = "A"
+    ElseIf Val(lastRight) = 8 Or Val(lastRight) = 7 Or Val(lastRight) = 6 Or Val(lastRight) = 5 Then
+        ComboBox2.Value = "B"
+    Else
+        ComboBox2.value = "Geral"
+    End If    
+
+    If lastLeft = 1 And Len(selectedValue) = 3 Then
+        ComboBox4.Value = "Primeiro"
+    ElseIf lastLeft = 2 And Len(selectedValue) = 3 Then
+        ComboBox4.Value = "Segundo"
+    ElseIf lastLeft = 3 And Len(selectedValue) = 3 Then
+        ComboBox4.Value = "Terceiro"
+    ElseIf selectedValue = "Cobertura" Then
+        ComboBox4.Value = "Cobertura"
+        ComboBox2.Value = "Geral"
+    Else
+        ComboBox4.Value = "Térreo"
+    End If
+
+End Sub
+
+
+Private Sub CommandButton1_Click()
+    Dim ws As Worksheet
+    Dim lastRow As Long
+    Dim maxValue As Variant
+    Dim validValues As Boolean
+    
+    ' Definir a planilha "Consumo"
+    Set ws = ThisWorkbook.Worksheets("Consumo")
+    
+    ' Encontrar a última linha preenchida na coluna A da planilha
+    lastRow = ws.Cells(ws.Rows.Count, "A").End(xlUp).Row
+    
+    ' Verificar se os valores dos ComboBoxes são válidos
+    validValues = ValidateComboBoxValues()
+    
+    If Not validValues Then
+        MsgBox "Preencha todos os campos com valores válidos.", vbExclamation
+        Exit Sub
+    End If
+    
+    ' Verificar se o valor de TextBox2 é um número válido
+    If Not IsNumeric(TextBox2.value) Then
+        MsgBox "Preencha um volume válido de consumo.", vbExclamation
+        Exit Sub
+    End If
+    
+    ' Verifica se há limite no caminhão
+    If Val(TextBox2.value) > (Val(TextBox3.value) - Val(TextBox4.value)) Then
+        MsgBox "Consumo superior ao limite do caminhão, reveja o consumo.", vbExclamation
+        Exit Sub
+    End If
+    
+    ' Obter o maior valor da coluna C e incrementá-lo em 1
+    maxValue = Application.WorksheetFunction.Max(ws.Range("C:C")) + 1
+    
+    ' Inserir os valores dos controles nas colunas desejadas
+    ws.Cells(lastRow + 1, "A").value = TextBox1.value
+    ws.Cells(lastRow + 1, "C").value = maxValue
+    ws.Cells(lastRow + 1, "F").value = ComboBox1.value
+    ws.Cells(lastRow + 1, "G").value = ComboBox2.value
+    ws.Cells(lastRow + 1, "H").value = ComboBox3.value
+    ws.Cells(lastRow + 1, "I").value = ComboBox4.value
+    ws.Cells(lastRow + 1, "J").value = ComboBox5.value
+    ws.Cells(lastRow + 1, "K").value = TextBox2.value
+    ws.Cells(lastRow + 1, "O").value = usernameGlobal
+    ws.Cells(lastRow + 1, "P").value = Now()
+    
+    ' Limpar os controles do formulário
+    TextBox1.value = ""
+    ComboBox1.value = ""
+    ComboBox2.value = ""
+    ComboBox3.value = ""
+    ComboBox4.value = ""
+    ComboBox5.value = ""
+    TextBox2.value = ""
+    
+    ' Exibir mensagem de sucesso
+    MsgBox "Valores inseridos com sucesso!", vbInformation
+    
+    Unload Me
+    CaminhaoLista.Show
+    
+End Sub
+
+Private Function ValidateComboBoxValues() As Boolean
+    Dim validValues As Boolean
+    
+    validValues = True
+    
+    ' Verificar se os ComboBoxes têm valores válidos
+    If Not IsValueInComboBox(ComboBox1, ComboBox1.value) Then validValues = False
+    If Not IsValueInComboBox(ComboBox2, ComboBox2.value) Then validValues = False
+    If Not IsValueInComboBox(ComboBox3, ComboBox3.value) Then validValues = False
+    If Not IsValueInComboBox(ComboBox4, ComboBox4.value) Then validValues = False
+    If Not IsValueInComboBox(ComboBox5, ComboBox5.value) Then validValues = False
+    
+    ValidateComboBoxValues = validValues
+End Function
+
+Private Function IsValueInComboBox(comboBox As MSForms.comboBox, value As String) As Boolean
+    Dim item As Variant
+    
+    If Not IsNull(value) Then
+        For Each item In comboBox.List
+            If Not IsNull(item) Then
+                If StrComp(CStr(item), value, vbTextCompare) = 0 Then
+                    IsValueInComboBox = True
+                    Exit Function
+                End If
+            End If
+        Next item
+    End If
+    
+    IsValueInComboBox = False
+End Function
+
+
+
+Private Sub CommandButton2_Click()
+
+    Unload Me
+    CaminhaoLista.Show
+
+End Sub

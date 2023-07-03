@@ -1,388 +1,326 @@
-    Private Sub UserForm_Terminate()
-    
-        ' Oculta o formulário atual
-        Unload Me
-        ' Carrega e exibe o formulário ListaCaminhoes
-        ListaCaminhoes.Show vbModal
-        
-    End Sub
-    
-    Private Sub CommandButton2_Click()
-    
-        ' Oculta o formulário atual
-        Unload Me
-        ' Carrega e exibe o formulário ListaCaminhoes
-        ListaCaminhoes.Show vbModal
-        
-    End Sub
+Private Sub UserForm_Activate()
 
-'Funcionalidade que permite que os campos de data preencham a data junto ao usuário
+    ' Verificar se a variável global "usernameGlobal" está vazia
+    If usernameGlobal = "" Then
+        ' Fechar o formulário atual
+        Me.Hide
+        ' Redirecionar para o formulário de login
+        Login.Show
+    End If
 
-    Private Sub TextBox1_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
-        ' Verifica se o código ASCII do caractere digitado não é um número (exceto o backspace)
-        If KeyAscii < 48 Or KeyAscii > 57 Then
-            If KeyAscii <> 8 Then ' Código ASCII para o backspace
-                KeyAscii = 0 ' Cancela o caractere digitado
-            End If
+    ComboBox1.AddItem "Argamassa Estabilizada"
+    
+    ComboBox2.AddItem "20"
+    ComboBox2.AddItem "19"
+    ComboBox2.AddItem "18"
+    ComboBox2.AddItem "17"
+    ComboBox2.AddItem "16"
+    ComboBox2.AddItem "15"
+    ComboBox2.AddItem "14"
+    ComboBox2.AddItem "13"
+    ComboBox2.AddItem "12"
+    ComboBox2.AddItem "11"
+    ComboBox2.AddItem "10"
+    ComboBox2.AddItem "9"
+    ComboBox2.AddItem "8"
+    ComboBox2.AddItem "7"
+    ComboBox2.AddItem "6"
+    ComboBox2.AddItem "5"
+    ComboBox2.AddItem "4"
+    ComboBox2.AddItem "3"
+    ComboBox2.AddItem "2"
+    ComboBox2.AddItem "1"
+
+End Sub
+
+Private Sub TextBox1_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+    Dim currentValue As String
+    Dim validKeys As String
+    Dim i As Integer
+    
+    currentValue = TextBox1.Text
+    validKeys = "0123456789"
+    
+    ' Verificar se a tecla pressionada é um número válido
+    If InStr(validKeys, Chr(KeyAscii)) = 0 Then
+        KeyAscii = 0
+    End If
+    
+    ' Adicionar o caractere "/" após os dois primeiros dígitos e após os próximos dois dígitos
+    If Len(currentValue) = 2 Or Len(currentValue) = 5 Then
+        TextBox1.Text = currentValue & "/"
+    End If
+End Sub
+
+Private Sub TextBox5_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+    Dim currentValue As String
+    Dim validKeys As String
+    Dim i As Integer
+    
+    currentValue = TextBox5.Text
+    validKeys = "0123456789"
+    
+    ' Verificar se a tecla pressionada é um número válido
+    If InStr(validKeys, Chr(KeyAscii)) = 0 Then
+        KeyAscii = 0
+    End If
+    
+    ' Adicionar o caractere ":" após os dois primeiros dígitos e após os próximos dois dígitos
+    If Len(currentValue) = 2 Then
+        TextBox5.Text = currentValue & ":"
+    End If
+End Sub
+
+Private Sub TextBox3_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+    Dim currentValue As String
+    Dim validKeys As String
+    Dim i As Integer
+    
+    currentValue = TextBox3.Text
+    validKeys = "0123456789"
+    
+        ' Verificar se a tecla pressionada é um número válido
+    If InStr(validKeys, Chr(KeyAscii)) = 0 Then
+        KeyAscii = 0
+    End If
+End Sub
+
+Private Sub TextBox4_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+    Dim currentValue As String
+    Dim validKeys As String
+    Dim i As Integer
+    
+    currentValue = TextBox4.Text
+    validKeys = "0123456789"
+    
+        ' Verificar se a tecla pressionada é um número válido
+    If InStr(validKeys, Chr(KeyAscii)) = 0 Then
+        KeyAscii = 0
+    End If
+End Sub
+
+Private Sub TextBox6_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+    Dim keyChar As String
+    
+    ' Obter o caractere digitado
+    keyChar = Chr(KeyAscii)
+    
+    ' Verificar se o caractere é uma barra, hífen ou espaço
+    If keyChar = "/" Or keyChar = "-" Or keyChar = " " Then
+        ' Ignorar o caractere
+        KeyAscii = 0
+    End If
+End Sub
+
+Private Sub TextBox6_Exit(ByVal Cancel As MSForms.ReturnBoolean)
+    TextBox6.Text = UCase(TextBox6.Text)
+End Sub
+
+Private Sub TextBox7_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+    Dim currentValue As String
+    Dim validKeys As String
+    Dim i As Integer
+    
+    currentValue = TextBox7.Text
+    validKeys = "0123456789"
+    
+        ' Verificar se a tecla pressionada é um número válido
+    If InStr(validKeys, Chr(KeyAscii)) = 0 Then
+        KeyAscii = 0
+    End If
+End Sub
+
+Private Sub TextBox9_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+    Dim currentValue As String
+    Dim validKeys As String
+    Dim i As Integer
+    
+    currentValue = TextBox9.Text
+    validKeys = "0123456789,"
+    
+        ' Verificar se a tecla pressionada é um número válido
+    If InStr(validKeys, Chr(KeyAscii)) = 0 Then
+        KeyAscii = 0
+    End If
+End Sub
+
+Private Sub TextBox10_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+    Dim currentValue As String
+    Dim validKeys As String
+    Dim i As Integer
+    
+    currentValue = TextBox10.Text
+    validKeys = "0123456789,"
+    
+        ' Verificar se a tecla pressionada é um número válido
+    If InStr(validKeys, Chr(KeyAscii)) = 0 Then
+        KeyAscii = 0
+    End If
+End Sub
+
+Private Sub CommandButton1_Click()
+    Dim ws As Worksheet
+    Dim lastRow As Long
+    Dim newId As Long
+    
+    ' Verificar se o valor de TextBox1 contém uma data válida
+    If Not IsDate(TextBox1.value) Then
+        MsgBox "Insira uma data válida..", vbExclamation
+        Exit Sub
+    End If
+    
+    ' Verificar se o valor de TextBox6 está no formato correto
+    If Not ValidateTextBox6Value(TextBox6.value) Then
+        MsgBox "Insira uma placa válida.", vbExclamation
+        Exit Sub
+    End If
+    
+    ' Verificar se os valores de TextBox9 e TextBox10 são números válidos
+    If Not IsNumeric(TextBox9.value) Or Not IsNumeric(TextBox10.value) Then
+        MsgBox "Insira valores de consumo e medição válidos.", vbExclamation
+        Exit Sub
+    End If
+    
+    ' Obter a última linha preenchida na coluna B da planilha Recebimento
+    Set ws = ThisWorkbook.Worksheets("Recebimento")
+    lastRow = ws.Cells(ws.Rows.Count, "B").End(xlUp).Row
+    
+    ' Obter o novo ID a ser cadastrado (maior valor da coluna B + 1)
+    newId = WorksheetFunction.Max(ws.Range("B2:B" & lastRow)) + 1
+    
+    ' Inserir os valores na planilha Recebimento
+    With ws
+        .Cells(lastRow + 1, "B").value = newId
+        .Cells(lastRow + 1, "C").value = TextBox1.value
+        .Cells(lastRow + 1, "D").value = ComboBox1.value
+        .Cells(lastRow + 1, "E").value = TextBox3.value
+        .Cells(lastRow + 1, "F").value = TextBox4.value
+        .Cells(lastRow + 1, "G").value = TextBox5.value
+        .Cells(lastRow + 1, "H").value = TextBox6.value
+        .Cells(lastRow + 1, "I").value = TextBox7.value
+        .Cells(lastRow + 1, "J").value = ComboBox2.value
+        .Cells(lastRow + 1, "K").value = TextBox9.value
+        .Cells(lastRow + 1, "M").value = TextBox10.value
+        .Cells(lastRow + 1, "N").value = TextBox11.value
+        .Cells(lastRow + 1, "O").value = usernameGlobal
+        .Cells(lastRow + 1, "P").value = Now()
+        
+    End With
+    
+    MsgBox "Valores cadastrados com sucesso!", vbInformation
+    
+    Unload Me
+    CaminhaoLista.Show
+    
+End Sub
+
+Private Sub ComboBox1_Exit(ByVal Cancel As MSForms.ReturnBoolean)
+    Dim value As Variant
+    Dim isValid As Boolean
+    Dim itemCount As Long
+    Dim i As Long
+    
+    value = ComboBox1.value
+    
+    ' Verificar se o valor está presente na lista de itens do ComboBox1
+    isValid = False
+    For i = 0 To ComboBox1.ListCount - 1
+        If StrComp(CStr(ComboBox1.List(i)), value, vbTextCompare) = 0 Then
+            isValid = True
+            Exit For
         End If
-    End Sub
+    Next i
     
-    Private Sub TextBox1_Change()
-        Dim value As String
-        Dim formattedValue As String
-        
-        ' Obtém o valor atual da TextBox
-        value = TextBox1.value
-        
-        ' Remove todos os caracteres não numéricos
-        value = Application.WorksheetFunction.Substitute(value, "/", "")
-        
-        ' Verifica se o valor é um número
-        If IsNumeric(value) Then
-            ' Adiciona automaticamente o caractere "/" ao digitar
-            If Len(value) > 2 Then
-                value = Left(value, 2) & "/" & Mid(value, 3)
-            End If
-            If Len(value) > 5 Then
-                value = Left(value, 5) & "/" & Mid(value, 6)
-            End If
-        End If
-        
-        ' Atualiza o valor da TextBox
-        TextBox1.value = value
-    End Sub
-
-'Preenche a lista de insumos e de medições
-
-    Private Sub UserForm_Activate()
-    
-        ' Adiciona o valor "Argamassa" à ComboBox1
-        ComboBox1.AddItem "Argamassa"
-        
-           ' Adiciona o valor "Argamassa" à ComboBox1
-        ComboBox2.AddItem "20"
-        ComboBox2.AddItem "19"
-        ComboBox2.AddItem "18"
-        ComboBox2.AddItem "17"
-        ComboBox2.AddItem "16"
-        ComboBox2.AddItem "15"
-        ComboBox2.AddItem "14"
-        ComboBox2.AddItem "13"
-        ComboBox2.AddItem "12"
-        ComboBox2.AddItem "10"
-        ComboBox2.AddItem "09"
-        ComboBox2.AddItem "08"
-        ComboBox2.AddItem "07"
-        ComboBox2.AddItem "06"
-        ComboBox2.AddItem "05"
-        ComboBox2.AddItem "04"
-        ComboBox2.AddItem "03"
-        ComboBox2.AddItem "02"
-        ComboBox2.AddItem "01"
-        
-    End Sub
-
-'Permitir somente números e vírgula nos campos de volume
-
-    Private Sub TextBox9_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
-        ' Verifica se o caractere digitado é um número ou uma vírgula
-        If Not (KeyAscii >= 48 And KeyAscii <= 57) And KeyAscii <> 44 Then
-            ' Cancela a entrada do caractere
-            KeyAscii = 0
-        End If
-    End Sub
-    
-    Private Sub TextBox10_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
-        ' Verifica se o caractere digitado é um número ou uma vírgula
-        If Not (KeyAscii >= 48 And KeyAscii <= 57) And KeyAscii <> 44 Then
-            ' Cancela a entrada do caractere
-            KeyAscii = 0
-        End If
-    End Sub
-
-'Permitir somente números nos campos de Remessa, Lacre e Pedido
-
-    Private Sub TextBox3_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
-        ' Verifica se o caractere digitado é um número ou uma vírgula
-        If Not (KeyAscii >= 48 And KeyAscii <= 57) Then
-            ' Cancela a entrada do caractere
-            KeyAscii = 0
-        End If
-    End Sub
-    
-    Private Sub TextBox4_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
-        ' Verifica se o caractere digitado é um número ou uma vírgula
-        If Not (KeyAscii >= 48 And KeyAscii <= 57) Then
-            ' Cancela a entrada do caractere
-            KeyAscii = 0
-        End If
-    End Sub
-    
-    Private Sub TextBox7_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
-        ' Verifica se o caractere digitado é um número ou uma vírgula
-        If Not (KeyAscii >= 48 And KeyAscii <= 57) Then
-            ' Cancela a entrada do caractere
-            KeyAscii = 0
-        End If
-    End Sub
-    
-'Somente letras e números e deixar em maiúsculo no campo do caminhão
-
-    Private Sub TextBox6_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
-        ' Obtém o caractere digitado
-        Dim inputChar As String
-        inputChar = Chr(KeyAscii)
-        
-        ' Verifica se o caractere é uma letra ou um número
-        If Not (IsNumeric(inputChar) Or (inputChar Like "[A-Za-z]")) Then
-            ' Cancela a entrada do caractere
-            KeyAscii = 0
-        Else
-            ' Converte o texto para maiúsculas
-            TextBox6.value = UCase(TextBox6.value)
-        End If
-    End Sub
-
-'Preenche a hora juntamente com o usuário
-
-    Private Sub TextBox5_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
-        ' Verifica se o código ASCII do caractere digitado não é um número (exceto o backspace)
-        If KeyAscii < 48 Or KeyAscii > 57 Then
-            If KeyAscii <> 8 Then ' Código ASCII para o backspace
-                KeyAscii = 0 ' Cancela o caractere digitado
-            End If
-        End If
-    End Sub
-    
-    Private Sub TextBox5_Change()
-        Dim value As String
-        Dim formattedValue As String
-    
-        ' Obtém o valor atual da TextBox
-        value = TextBox5.value
-        
-        ' Remove todos os caracteres não numéricos
-        value = Application.WorksheetFunction.Substitute(value, ":", "")
-        
-        ' Verifica se o valor é um número
-        If IsNumeric(value) Then
-            ' Adiciona automaticamente o caractere ":" ao digitar
-            If Len(value) > 2 Then
-                value = Left(value, 2) & ":" & Mid(value, 3)
-            End If
-        End If
-        
-        ' Atualiza o valor da TextBox
-        TextBox5.value = value
-    End Sub
-
-'Cadastra novo caminhão conforme informações inseridas
-
-    Private Sub CommandButton1_Click()
-        Dim ws As Worksheet
-        Dim tbl As ListObject
-        Dim lastRow As Long
-        Dim lastID As String
-        Dim sequentialNumber As Long
-        
-        ' Definir a planilha de destino
-        Set ws = ThisWorkbook.Sheets("Recebimento")
-        
-        ' Definir a tabela
-        Set tbl = ws.ListObjects("recebArgamassa")
-        
-        ' Encontrar a última linha na tabela
-        lastRow = tbl.Range.Rows.Count
-        
-        ' Obter o último valor da coluna "Ordem" e adicionar 1
-        Dim maxOrdem As Long
-        maxOrdem = Application.WorksheetFunction.Max(tbl.ListColumns("Ordem").DataBodyRange) + 1
-        
-        ' Preencher os valores nas colunas correspondentes
-        With tbl.DataBodyRange.Rows(lastRow)
-            .Cells(1, tbl.ListColumns("Ordem").index).value = maxOrdem
-            .Cells(1, tbl.ListColumns("Data").index).value = TextBox1.value
-            .Cells(1, tbl.ListColumns("Insumo").index).value = ComboBox1.value
-            .Cells(1, tbl.ListColumns("Nota de Remessa").index).value = TextBox3.value
-            .Cells(1, tbl.ListColumns("Lacre").index).value = TextBox4.value
-            .Cells(1, tbl.ListColumns("Saída da Usina").index).value = TextBox5.value
-            .Cells(1, tbl.ListColumns("Caminhão").index).value = TextBox6.value
-            .Cells(1, tbl.ListColumns("Pedido").index).value = TextBox7.value
-            .Cells(1, tbl.ListColumns("Medição").index).value = ComboBox2.value
-            .Cells(1, tbl.ListColumns("Recebido (m³)").index).value = TextBox9.value
-            .Cells(1, tbl.ListColumns("Medido (m³)").index).value = TextBox10.value
-        End With
-        
-        ' Limpar os campos do formulário
-        TextBox1.value = ""
+    If Not isValid Then
+        ' Valor inválido, limpar o ComboBox1 e exibir uma mensagem
         ComboBox1.value = ""
-        TextBox3.value = ""
-        TextBox4.value = ""
-        TextBox5.value = ""
-        TextBox6.value = ""
-        TextBox7.value = ""
+        MsgBox "Selecione um insumo válido.", vbExclamation
+        ComboBox1.SetFocus ' Definir o foco novamente no ComboBox1
+    End If
+End Sub
+
+Private Sub ComboBox2_Exit(ByVal Cancel As MSForms.ReturnBoolean)
+    Dim value As Variant
+    Dim isValid As Boolean
+    Dim itemCount As Long
+    Dim i As Long
+    
+    value = ComboBox2.value
+    
+    ' Verificar se o valor está presente na lista de itens do ComboBox1
+    isValid = False
+    For i = 0 To ComboBox2.ListCount - 1
+        If StrComp(CStr(ComboBox2.List(i)), value, vbTextCompare) = 0 Then
+            isValid = True
+            Exit For
+        End If
+    Next i
+    
+    If Not isValid Then
+        ' Valor inválido, limpar o ComboBox1 e exibir uma mensagem
         ComboBox2.value = ""
-        TextBox9.value = ""
-        TextBox10.value = ""
-        
-        ' Atualizar a tabela
-        tbl.Resize tbl.Range.Resize(lastRow + 1)
-        
-        ' Exibir mensagem de sucesso
-        MsgBox "Dados inseridos com sucesso!"
-        
-        Unload Me
-        ListaCaminhoes.Show vbModal
-    End Sub
+        MsgBox "Selecione uma medição válida.", vbExclamation
+        ComboBox2.SetFocus ' Definir o foco novamente no ComboBox1
+    End If
+End Sub
 
-'Funcionalidade que faz as verificações dos campos
+Private Function ValidateComboBoxValue(comboBox As MSForms.comboBox, validValues() As Variant) As Boolean
+    Dim value As Variant
+    Dim item As Variant
+    
+    value = comboBox.value
+    
+    For Each item In validValues
+        If StrComp(CStr(item), CStr(value), vbTextCompare) = 0 Then
+            ValidateComboBoxValue = True
+            Exit Function
+        End If
+    Next item
+    
+    ValidateComboBoxValue = False
+End Function
 
-    Private Sub TextBox1_Exit(ByVal Cancel As MSForms.ReturnBoolean)
-        Dim userInput As String
-        Dim formattedDate As String
-        
-        ' Obtenha o valor digitado no campo TextBox1
-        userInput = TextBox1.value
-        
-        ' Verifique se é uma data válida no formato DD/MM/YY
-        If IsDate(userInput) Then
-            ' Converta para o formato DD/MM/YYYY
-            formattedDate = Format(DateValue(userInput), "dd/mm/yyyy")
-            
-            ' Atualize o valor do campo TextBox1
-            TextBox1.value = formattedDate
-        Else
-            MsgBox "A data digitada não é válida. Digite uma data no formato DD/MM/YY.", vbExclamation, "Data Inválida"
-            Cancel = True ' Impede que o foco seja movido para outro controle
-        End If
-    End Sub
+Private Function ValidateTextBox6Value(ByVal value As String) As Boolean
+    Dim prefix As String
+    Dim suffix As String
     
-    Private Sub ComboBox1_Exit(ByVal Cancel As MSForms.ReturnBoolean)
-        Dim selectedValue As Variant
-        Dim foundMatch As Boolean
-        
-        ' Obtenha o valor selecionado no ComboBox1
-        selectedValue = ComboBox1.value
-        
-        ' Verifique se o valor selecionado existe na lista do ComboBox1
-        For Each Item In ComboBox1.List
-            If Item = selectedValue Then
-                foundMatch = True
-                Exit For
-            End If
-        Next Item
-        
-        ' Se não houver correspondência, limpe o campo ComboBox1 e exiba uma mensagem de erro
-        If Not foundMatch Then
-            ComboBox1.value = "" ' Limpa o campo ComboBox1
-            MsgBox "Selecione um insumo válido.", vbExclamation, "Valor Inválido"
-            Cancel = True ' Impede que o foco seja movido para outro controle
-        End If
-    End Sub
+    ' Verificar se a string tem pelo menos 7 caracteres
+    If Len(value) <> 7 Then
+        ValidateTextBox6Value = False
+        Exit Function
+    End If
+    
+    ' Extrair os três primeiros caracteres e os quarto, sexto e sétimo caracteres
+    prefix = Left(value, 3)
+    suffix = Mid(value, 4, 1) & Mid(value, 6, 2)
+    
+    ' Verificar se os três primeiros caracteres são letras e se o restante são números
+    If IsNumeric(suffix) And IsStringAlpha(prefix) Then
+        ValidateTextBox6Value = True
+    Else
+        ValidateTextBox6Value = False
+    End If
+End Function
 
-    Private Sub ComboBox2_Exit(ByVal Cancel As MSForms.ReturnBoolean)
-        Dim selectedValue As Variant
-        Dim foundMatch As Boolean
-        
-        ' Obtenha o valor selecionado no ComboBox2
-        selectedValue = ComboBox2.value
-        
-        ' Verifique se o valor selecionado existe na lista do ComboBox2
-        For Each Item In ComboBox2.List
-            If Item = selectedValue Then
-                foundMatch = True
-                Exit For
-            End If
-        Next Item
-        
-        ' Se não houver correspondência, limpe o campo ComboBox2 e exiba uma mensagem de erro
-        If Not foundMatch Then
-            ComboBox2.value = "" ' Limpa o campo ComboBox2
-            MsgBox "Selecione uma medição válida.", vbExclamation, "Valor Inválido"
-            Cancel = True ' Impede que o foco seja movido para outro controle
+Private Function IsStringAlpha(ByVal value As String) As Boolean
+    Dim i As Integer
+    Dim charCode As Integer
+    
+    ' Verificar se todos os caracteres da string são letras
+    For i = 1 To Len(value)
+        charCode = Asc(UCase(Mid(value, i, 1)))
+        If charCode < 65 Or charCode > 90 Then
+            IsStringAlpha = False
+            Exit Function
         End If
-    End Sub
+    Next i
+    
+    IsStringAlpha = True
+End Function
 
-    Private Sub TextBox9_Exit(ByVal Cancel As MSForms.ReturnBoolean)
-        Dim userInput As String
-        
-        ' Obtenha o valor digitado no campo TextBox9
-        userInput = TextBox9.value
-        
-        ' Verifique se é um número válido
-        If Not IsNumeric(userInput) Then
-            MsgBox "O valor digitado não é um número válido. Digite um número válido.", vbExclamation, "Número Inválido"
-            TextBox9.value = "" ' Limpa o campo TextBox9
-            Cancel = True ' Impede que o foco seja movido para outro controle
-        End If
-    End Sub
-    
-    Private Sub TextBox10_Exit(ByVal Cancel As MSForms.ReturnBoolean)
-        Dim userInput As String
-        
-        ' Obtenha o valor digitado no campo TextBox10
-        userInput = TextBox10.value
-        
-        ' Verifique se é um número válido
-        If Not IsNumeric(userInput) Then
-            MsgBox "O valor digitado não é um número válido. Digite um número válido.", vbExclamation, "Número Inválido"
-            TextBox10.value = "" ' Limpa o campo TextBox10
-            Cancel = True ' Impede que o foco seja movido para outro controle
-        End If
-    End Sub
+Private Sub CommandButton2_Click()
 
-    Private Sub TextBox5_Exit(ByVal Cancel As MSForms.ReturnBoolean)
-        Dim userInput As String
-        
-        ' Obtenha o valor digitado no campo TextBox5
-        userInput = TextBox5.value
-        
-        ' Verifique se é um horário válido no formato HH:MM
-        If Not IsTimeValid(userInput) Then
-            MsgBox "O horário digitado não é válido. Digite um horário no formato HH:MM.", vbExclamation, "Horário Inválido"
-            TextBox5.value = "" ' Limpa o campo TextBox5
-            Cancel = True ' Impede que o foco seja movido para outro controle
-        End If
-    End Sub
-    
-    Function IsTimeValid(ByVal timeString As String) As Boolean
-        On Error Resume Next
-        Dim testTime As Date
-        testTime = TimeValue(timeString)
-        IsTimeValid = (Err.Number = 0)
-        On Error GoTo 0
-    End Function
-    
-    Private Sub TextBox6_Exit(ByVal Cancel As MSForms.ReturnBoolean)
-        Dim userInput As String
-        
-        ' Obtenha o valor digitado no campo TextBox6
-        userInput = TextBox6.value
-        
-        ' Verifique se é uma placa válida no formato XXX#### ou XXX#X##
-        If Not IsPlateValid(userInput) Then
-            MsgBox "A placa digitada não é válida.", vbExclamation, "Placa Inválida"
-            TextBox6.value = "" ' Limpa o campo TextBox6
-            Cancel = True ' Impede que o foco seja movido para outro controle
-        End If
-    End Sub
-    
-    Function IsPlateValid(ByVal plate As String) As Boolean
-        Dim pattern As String
-        Dim regex As Object
-        
-        ' Defina o padrão da expressão regular
-        pattern = "^[A-Z]{3}\d{4}$|^[A-Z]{3}\d[A-Z]{1}\d{2}$"
-        
-        ' Inicialize o objeto RegExp
-        Set regex = CreateObject("VBScript.RegExp")
-        
-        ' Configure a expressão regular
-        With regex
-            .pattern = pattern
-            .IgnoreCase = True ' Ignorar diferenciação entre maiúsculas e minúsculas
-        End With
-        
-        ' Verifique se a placa corresponde ao padrão
-        IsPlateValid = regex.Test(plate)
-    End Function
+    Unload Me
+    CaminhaoLista.Show
+
+End Sub

@@ -1,26 +1,35 @@
-'Funcionalidade que insere todos os caminhões da ListBox1
+Option Explicit
+
+    Private arrData As Variant
+    Private i As Long
+    Private ws As Worksheet
+    Private ws2 As Worksheet
+    Private tbl As ListObject
+    Private tblc As ListObject
+    Private rngRecebID As Range
+    Private rngData As Range
+    Private rngConsID As Range
 
 Private Sub UserForm_Activate()
-    ' Preencher a ListBox1 com todos os valores da coluna "recebID" em ordem decrescente
-    Dim ws As Worksheet
-    Dim tbl As ListObject
-    Dim rng As Range
-    Dim arrData As Variant
-    Dim i As Long
+
+    ' Verificar se a variável global "usernameGlobal" está vazia
+    If usernameGlobal = "" Then
+        ' Fechar o formulário atual
+        Me.Hide
+        ' Redirecionar para o formulário de login
+        Login.Show
+    End If
     
-    ' Definir a planilha "Recebimento"
     Set ws = ThisWorkbook.Worksheets("Recebimento")
-    
-    ' Definir a tabela "recebArgamassa"
+    Set ws2 = ThisWorkbook.Worksheets("Consumo")
     Set tbl = ws.ListObjects("recebArgamassa")
+    Set tblc = ws2.ListObjects("consArgamassa")
+    Set rngRecebID = tbl.ListColumns("recebID").DataBodyRange
+    Set rngData = tbl.ListColumns("Data").DataBodyRange
+    Set rngConsID = tblc.ListColumns("ConsID").DataBodyRange
+
+    arrData = rngRecebID.value
     
-    ' Obter a coluna "recebID" da tabela
-    Set rng = tbl.ListColumns("recebID").DataBodyRange
-    
-    ' Inserir os valores na matriz
-    arrData = rng.value
-    
-    ' Limpar a ListBox1
     ListBox1.Clear
     
     ' Adicionar os valores na ListBox1 em ordem decrescente
@@ -28,15 +37,12 @@ Private Sub UserForm_Activate()
         ListBox1.AddItem arrData(i, 1)
     Next i
 End Sub
-
 'Funcionalidade que permite limpa o campo de pesquisa de data para permitir o preenchimento do usuário
-
 Private Sub TextBox1_Enter()
     TextBox1.value = "" ' Remove o valor existente ao selecionar a TextBox
 End Sub
 
 'Funcionalidade que permite que os campos de data preencham a data junto ao usuário
-
 Private Sub TextBox1_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
     ' Verifica se o código ASCII do caractere digitado não é um número (exceto o backspace)
     If KeyAscii < 48 Or KeyAscii > 57 Then
@@ -79,19 +85,7 @@ Private Sub ListBox1_Click()
         selectedValue = ListBox1.value
         
         ' Procurar o valor selecionado na coluna "RecebID" da tabela "recebArgamassa"
-        Dim ws As Worksheet
-        Dim tbl As ListObject
-        Dim rngRecebID As Range
         Dim rngFound As Range
-        
-        ' Definir a planilha "Recebimento"
-        Set ws = ThisWorkbook.Worksheets("Recebimento")
-        
-        ' Definir a tabela "recebArgamassa"
-        Set tbl = ws.ListObjects("recebArgamassa")
-        
-        ' Obter a coluna "RecebID" da tabela
-        Set rngRecebID = tbl.ListColumns("RecebID").DataBodyRange
         
         ' Procurar o valor selecionado na coluna "RecebID"
         Set rngFound = rngRecebID.Find(What:=selectedValue, LookIn:=xlValues, LookAt:=xlWhole)
@@ -110,38 +104,54 @@ Private Sub ListBox1_Click()
     End If
 End Sub
 
+Private Sub ListBox2_Click()
+    ' Verificar se um valor foi selecionado na ListBox2
+    If ListBox2.ListIndex <> -1 Then
+        ' Obter o valor selecionado na ListBox2
+        Dim selectedValue As String
+        selectedValue = ListBox2.value
+        
+        ' Procurar o valor selecionado na coluna "RecebID" da tabela "recebArgamassa"
+        Dim rngFound As Range
+        
+        ' Procurar o valor selecionado na coluna "RecebID"
+        Set rngFound = rngConsID.Find(What:=selectedValue, LookIn:=xlValues, LookAt:=xlWhole)
+        
+        ' Verificar se o valor foi encontrado
+        If Not rngFound Is Nothing Then
+            ' Atualizar os campos TextBox10 a TextBox16 com os valores correspondentes
+            TextBox17.value = rngFound.Offset(0, 4).value ' Serviço
+            TextBox18.value = rngFound.Offset(0, 6).value ' Bloco
+            TextBox19.value = rngFound.Offset(0, 8).value ' Unidade
+            TextBox20.value = rngFound.Offset(0, 9).value ' Consumido (m³)
+            TextBox21.value = rngFound.Offset(0, 10).value ' Projetado (m³)
+        End If
+    End If
+End Sub
+
 Private Sub ListBox1_Change()
-    Dim ws As Worksheet
     Dim lastRow As Long
     Dim i As Long
     Dim searchValue As String
     Dim result As String
     
-    Set ws = ThisWorkbook.Sheets("Consumo") ' Substitua "Consumo" pelo nome da sua planilha
-    
-    ' Limpa os itens anteriores da ListBox2
     ListBox2.Clear
     
-    ' Obtém o valor selecionado na ListBox1
     searchValue = ListBox1.value
     
-    ' Obtém a última linha preenchida na coluna RecebID
-    lastRow = ws.Cells(ws.Rows.Count, "A").End(xlUp).Row
+    lastRow = ws2.Cells(ws2.Rows.Count, "A").End(xlUp).Row
     
-    ' Percorre os valores da coluna RecebID para encontrar correspondências
     For i = 2 To lastRow
-        If ws.Cells(i, "A").value = searchValue Then
-            ' Concatena os valores das colunas desejadas
-            result = "(" & ws.Cells(i, "B").value & ") Consumo de " & ws.Cells(i, "K").value & " para " & ws.Cells(i, "F").value & " no dia " & Format(ws.Cells(i, "D").value, "dd/mm/yyyy")
-            ' Adiciona o resultado à ListBox2
+        If ws2.Cells(i, "A").value = searchValue Then
+            result = ws2.Cells(i, "B").value
             ListBox2.AddItem result
         End If
     Next i
 End Sub
 
-Sub CommandButton1_Click()
+Private Sub CommandButton1_Click()
     Unload Me
-    CadastroCaminhao.Show
+    CaminhaoCadastro.Show vbModal
 End Sub
 
 Private Sub CommandButton2_Click()
@@ -151,9 +161,11 @@ Private Sub CommandButton2_Click()
         If IsNumeric(TextBox14.value) And IsNumeric(TextBox15.value) Then
             If CDbl(TextBox14.value) - CDbl(TextBox15.value) > 0 Then
                 ' Carrega o novo formulário e transfere o valor selecionado para TextBox11
-                CadastroConsumo.TextBox11.value = ListBox1.value
+                ConsumoCadastro.TextBox1.value = ListBox1.value
+                ConsumoCadastro.TextBox3.value = TextBox14.value
+                ConsumoCadastro.TextBox4.value = TextBox15.value
                 Unload Me
-                CadastroConsumo.Show vbModal
+                ConsumoCadastro.Show vbModal
             Else
                 MsgBox "Não há consumo disponível no caminhão selecionado.", vbExclamation, "Erro"
             End If
@@ -164,7 +176,6 @@ Private Sub CommandButton2_Click()
         MsgBox "Selecione um caminhão para consumir.", vbExclamation, "Erro"
     End If
 End Sub
-
 
 Private Sub CommandButton3_Click()
     ' Limpar a ListBox1
@@ -182,48 +193,21 @@ Private Sub CommandButton3_Click()
         searchDate = DateValue("01/01/1900") ' Definir uma data inválida
     End If
     
-    ' Definir a planilha "Recebimento"
-    Dim ws As Worksheet
-    Set ws = ThisWorkbook.Worksheets("Recebimento")
-    
-    ' Definir a tabela "recebArgamassa"
-    Dim tbl As ListObject
-    Set tbl = ws.ListObjects("recebArgamassa")
-    
-    ' Obter a coluna "Data" e "RecebID" da tabela
-    Dim rngData As Range
-    Set rngData = tbl.ListColumns("Data").DataBodyRange
-    
-    Dim rngRecebID As Range
-    Set rngRecebID = tbl.ListColumns("RecebID").DataBodyRange
-    
     ' Verificar se o valor digitado é vazio
     If Len(searchValue) = 0 Then
         ' Preencher a ListBox1 com todos os valores da coluna "recebID" em ordem decrescente
-        Dim ws2 As Worksheet
-        Dim tbl2 As ListObject
-        Dim rng2 As Range
         Dim arrData2 As Variant
-        Dim i2 As Long
-        
-        ' Definir a planilha "Recebimento"
-        Set ws2 = ThisWorkbook.Worksheets("Recebimento")
-        
-        ' Definir a tabela "recebArgamassa"
-        Set tbl2 = ws.ListObjects("recebArgamassa")
-        
-        ' Obter a coluna "recebID" da tabela
-        Set rng2 = tbl.ListColumns("recebID").DataBodyRange
+        Dim  As Long
         
         ' Inserir os valores na matriz
-        arrData2 = rng2.value
+        arrData2 = rngRecebID.value
         
         ' Limpar a ListBox1
         ListBox1.Clear
         ' Adicionar os valores na ListBox1 em ordem decrescente
-        For i2 = UBound(arrData2, 1) To LBound(arrData2, 1) Step -1
-            ListBox1.AddItem arrData2(i2, 1)
-        Next i2
+        For i = UBound(arrData2, 1) To LBound(arrData2, 1) Step -1
+            ListBox1.AddItem arrData2(i, 1)
+        Next i
     Else
         ' Verificar cada célula na coluna "Data" e adicionar o valor correspondente de "RecebID" na ListBox1
         Dim i As Long
@@ -256,9 +240,23 @@ Private Sub CommandButton3_Click()
     End If
 End Sub
 
+Private Sub CommandButton4_Click()
+    Application.Visible = True ' torna o Excel visível novamente
+    ThisWorkbook.Activate ' ativa a janela da pasta de trabalho atual
+    ThisWorkbook.Windows(1).Visible = True ' torna a janela da pasta de trabalho atual visível
+    ThisWorkbook.Windows(1).Activate ' ativa a janela da pasta de trabalho atual
+    
+    ' ativa a edição de planilhas
+    Application.EnableEvents = True
+    Application.Interactive = True
+    Application.ScreenUpdating = True
+    
+    'Esconder formulário atual
+    Unload Me
+End Sub
+
 Private Sub SortArrayDescending(ByRef arr() As Variant)
     ' Implementar uma classificação simples para ordenar o array em ordem decrescente
-    
     Dim i As Long
     Dim j As Long
     Dim temp As Variant
@@ -272,4 +270,16 @@ Private Sub SortArrayDescending(ByRef arr() As Variant)
             End If
         Next j
     Next i
+End Sub
+
+Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
+
+    Set ws = Nothing
+    Set ws2 = Nothing
+    Set tbl = Nothing
+    Set rngRecebID = Nothing
+    Set rngData = Nothing
+
+    Unload Me
+
 End Sub
